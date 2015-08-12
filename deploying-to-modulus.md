@@ -172,9 +172,126 @@ This next one, `MONGO_URL` should make sense. Remember that connection string we
   <p>A connection string with a username and password in it is like pure gold for anyone that wants to get access to your database. When it comes to handling these values, make sure to store them in a secure place and only let the people who absolutely need access to them to see them. <strong>This is not a joke; if this gets out, you run the risk of exposing all of your users/customers data, so <em>be careful</em>.</strong></p>
 </div>
 
-Ok! Last up is `METEOR_SETTINGS` and this one is optional depending on how you've built your app. If you've [used a settings.json file](http://themeteorchef.com/snippets/making-use-of-settings-json) in your application, this value will need to be set equal to the _contents_ of your `settings.json` file. This can be copy/pasted into the field, or, pushed via the Modulus CLI (we'll learn how to automate this in a bit).
-  
+Ok! Last up is `METEOR_SETTINGS` and this one is optional depending on how you've built your app. If you've [used a settings.json file](http://themeteorchef.com/snippets/making-use-of-settings-json) in your application, this value will need to be set equal to the _contents_ of your `settings.json` file. This can be copy/pasted into the field, or, set via the Modulus CLI (we'll learn how to automate this in a bit).
+ 
+Once we click "Save" beneath the list of environment variables, we've got our app configured! This should be all we need to do in order to successfully deploy our application. Real quick, we should make a nod to SSL and get an understanding for how it's set up on Modulus.
 
 #### SSL
+In order to keep our applications a little more secure, we can add [SSL]() to our application so that any data moving between the browser and our server is kept private with encryption. When you load up an app and see the URL turn green (or display a lock) and change the protocol from `http` to `https`, this signifies that an application is using SSL and that your connection to that application is secure.
+
+Depending on the type of application we're running, we may need to add support for SSL. Any application that transmits any for of secure data for users (e.g. credit cards)—whether to a third-part service or otherwise—should use SSL. To "use" SSL, we need to acquire an SSL _certificate_ from a provider. We won't cover obtaining this here, but a quick search for SSL providers will turn up a lot of different options. My personal recommendation is [Namecheap](http://namecheap.com) as their basic certificates are relatively inexpensive and the turnaround time for getting a certificate is pretty quick (a few minutes to a few hours).
+
+For now, let's focus on setting up an SSL certificate on Modulus. From the "Administration" tab of your project's dashboard, locate the Custom SSL block.
+
+![Custom SSL block on Modulus](http://cl.ly/image/3m2A2m2w3K1M/Image%202015-08-12%20at%209.25.26%20AM.png)
+
+When we click that red plus `+` symbol on the right, we'll be presented with a modal for inputting our "Private Key" and our "Certificate." The "Private Key" field is where you'll place the RSA Private Key you receive when you [generate a CSR](https://github.com/DavidWittman/csrgenerator.com). A CSR is what a certificate provider will require in order to _generate_ your certificate. In that second field, "Certificate" we'll paste in the SSL certificate we receive from our provider. Note: this isn't a "file" like you might expect it to be. Instead, this is just plain text with some specific formatting that the browser can recognize as an SSL certificate. Here's an example of what you might have:
+
+<p class="block-header">Web Server Certificate</p>
+
+```text
+-----BEGIN CERTIFICATE-----
+Areallylongstringofibberishthatisactuallyyoursslcertificate...
+-----END CERTIFICATE-----
+```
+
+You might also have an "Intermediate CA" (some SSL providers will include this, some might not) which is similar to our Web Server Certificate:
+
+<p class="block-header">Intermediate CA</p>
+
+```text
+-----BEGIN CERTIFICATE-----
+Areallylongstringofibberishthatisactuallyyoursslcertificate...
+-----END CERTIFICATE-----
+```
+Combined, these two form an SSL "chain" confirming the identity of your server, allowing connections to be served over SSL. Oof. Back on Modulus, if we have just a Web Server Certificate, we can paste this into our "Certificate" field. If we have _both_ a Web Server Certificate _and_ an Intermediate CA, we want to paste _both_ into the "Certificate" field; the Web Server Certificate first followed by the Intermediate CA. Something like this:
+
+```text
+-----BEGIN CERTIFICATE-----
+This is our Web Server certificate.
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+This is our Intermedia CA certificate.
+-----END CERTIFICATE-----
+```
+In case you're wondering, _yes_, you need to include the `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----` lines in both certificates. **Paste these exactly as you receive them from your SSL provider**.
+
+Once we have this in place, we should be all set on Modulus for SSL. 
+
+<div class="note">
+  <h3>The Force SSL Package</h3>
+  <p>If we're using SSL in our app, we can ensure that our users are connecting via SSL by adding the <a href="https://atmospherejs.com/meteor/force-ssl">Force SSL</a> package by MDG. Once installed, this will make sure that any connections to your application are served over SSL by default (e.g. if a user attempted to connect to <code>http://app.com</code> they would be automatically redirected to <code>https://app.com</code>).</p>
+</div>
+
 ### Deploying to Modulus
+Okay! Finally! We've got our app configured, so now it's time to deploy. Back in our application directory in the terminal, all we have to run is:
+
+<p class="block-header">Terminal</p>
+
+```bash
+modulus deploy
+```
+Nice, right? When we do this, we'll be prompted by Modulus to select the server we'd like to deploy to. If we only have one, we'll be given a simple prompt to enter `yes` like this:
+
+![](http://cl.ly/image/090f3V2g2g3u/Image%202015-08-12%20at%209.53.57%20AM.png)
+
+Once we enter `yes`, Modulus will get to work. You may notice something interesting. As soon as we do this, Modulus will display a message like `Meteor project detected...` and then display some information about determining a Meteor version and building your Meteor application. What's this? 
+
+Remember earlier when we mentioned that Modulus technically only hosts Node.js apps and not Meteor apps as-is? This is where we make the connection. Here, Modulus is using a tool they've built called [Demeteorizer](https://github.com/onmodulus/demeteorizer) which converts our Meteor app into a vanilla Node.js app. Cool, eh? This functionality is built into the Modulus CLI by default, but we can install Demeteorizer on its own to convert our app for hosting on other PaaS providers, too!
+
+![Example app running on Modulus](http://cl.ly/image/3T1p281I2Q01/Image%202015-08-12%20at%2010.11.30%20AM.png)
+
+After a few seconds, our app will be deployed! If everything worked as expected, we should be able to point our browser to the URL for our application (e.g. `http://demo-femo-50073.onmodulus.net`) and see our application up and running. Hell yeah! 
+
+Congratulations: you just deployed an application into production. Not as scary as you though, huh? Granted, this is just one piece of going into production, but it's a big one. From here, we can focus on improving the performance and security of our application trusting that all of that work has a place to live!
+
+Before we part ways, we should chat about automating this process a bit.
+
 #### Automating deployments
+This is entirely optional but something that's really smart to consider when putting an application into production. When it comes to running an application for users and customers, we need to keep in mind that _things will change_. Hopefully that just means that we'll deploy new features or upgrade our app, but sometimes that can mean having to fix bugs and other problems that crop up in the day-to-day of running an application.
+
+In light of this, it's smart to have a well-tuned workflow that we can rely on when it comes to deploying our application. Even though something like Modulus makes all of this fairly simple, there's still a small margin of error that crops up when we start to do things like host multiple servers on Modulus (e.g. staging vs. production) and [making use of a settings.json file](http://themeteorchef.com/snippets/making-use-of-settings-json). Automating all of this means thinking about all of the steps involved and baking them into a simple, easy-to-remember process that performs all of the steps _for us_.
+
+To do this, we're going to rely on something we actually get from NPM (Node package manager): "scripts." [A tip](http://blog.differential.com/use-package-json-in-your-meteor-app-for-fun-profit/) picked up from [Gerard Sychay](https://twitter.com/hellogerard) over at [Differential](http://differential.io), we can use NPM scripts to automate our workflow a bit by creating short-hand commands that combine a longer string of shell commands. Confused? Let's take a look.
+
+<p class="block-header">package.json</p>
+
+```javascript
+{
+  "name": "application-name",
+  "version": "1.0.0",
+  "description": "Application description.",
+  "scripts": {
+    "start": "meteor --settings settings-development.json",
+    "staging": "modulus env set METEOR_SETTINGS \"$(cat settings-development.json)\" -p 'Demo Femo - Staging' && modulus deploy -f -p 'Demo Femo - Staging'",
+    "production": "modulus env set METEOR_SETTINGS \"$(cat settings-production.json)\" -p 'Demo Femo' && modulus deploy -f -p 'Demo Femo'"
+  }
+}
+```
+To use NPM scripts, we have to create a file called `package.json` in the root of our application. Here, we add a few items to describe our application (not 100% necessary but nice to have) and then we add an object called `"scripts"`. Inside, we store a handful of key/value pairs that represent commands we can call from the terminal when we're inside of our project directory. Notice that each command corresponds to a longer string of commands. Here, we've set up a few things to help us account for using multiple settings files and making sure that we deploy to the correct _environment_, either `staging` or `production`. 
+
+Above, we only setup a single server so this may be a bit confusing. Recall back to the beginning of this recipe where we discussed having different environments. This is where something like this comes into play. Here, we're creating commands that point to one of those environments. For example, let's look at the value of our "production" script:
+
+```javascript
+"modulus env set METEOR_SETTINGS \"$(cat settings-production.json)\" -p 'Demo Femo' && modulus deploy -f -p 'Demo Femo'"
+```
+This one string is actually responsible for _two_ things:
+
+1. Taking the contents of our `settings-production.json` file and setting it equal to the `METEOR_SETTINGS` environment variable that we looked at earlier (notice, Modulus gives us a handy command for doing this from the command line) for the specified project name.
+2. Calls to `modulus deploy`, passing the name of the project we want to deploy to.
+
+See what this does? When we call our `production` script, we'll automatically get our `METEOR_SETTINGS` value set to the current contents of the settings file we pass in `\"$(cat settings-production.json)\"` and then deploy our application. Not only does this save us a few keystrokes, but it protects us from doing things like using the wrong settings file or deploying to the wrong server. Further, this means that now we can call a single command to deploy our latest work into the specified environment. Okay! Sold! But how do we call it?
+
+<p class="block-header">Terminal</p>
+
+```bash
+npm run production
+```
+When we call this, each of the commands in the string above will be called in order for us. Let's take a look at how it looks in action.
+
+![NPM scripts running in production](http://cl.ly/image/0j2h0l162u3A/using-npm-scripts.gif)
+
+So cool! Notice that this behaves just like us typing out each command ourselves. Again, the benefit being that we make sure the _right_ commands get called in the _right_ order each and every time. 
+
+### Wrap Up & Summary
+In this recipe we learned about taking a Meteor app into production using the Modulus PaaS. We learned about setting up a server on Modulus, setting up a database, and configuring our server to get our deployment up and running. We also learned how to deploy our project from the command line and automate the process of deployment using NPM scripts!
