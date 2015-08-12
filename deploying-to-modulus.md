@@ -2,10 +2,10 @@
 When we talk about deploying an application, what we really mean is making that application accessible to others outside of our own computer or our local network. When we “deploy” something, we send it to one of a few `targets`: different environments where our application will run. Depending on the type of application we’re building and what we need to test, we generally deploy to one of the following environments:
 
 #### Development
-While not necessarily an environment that we _deploy_ to, our development environment is sort of like the mothership. This is where the bulk of our work occurs. This is your local computer (or your teammate’s computer) where you run the application in isolation. For example, this is where we can throw random bits and bobs of data into the database without worrying.
+While not necessarily an environment that we _deploy_ to, our development environment is sort of like the mothership. This is where the bulk of our work occurs. This is your local computer (or your teammate’s computer) where you run your application in isolation and actually _develop_ it. For example, this is where we can throw random bits and bobs of data into the database without worrying.
 
 #### Staging
-A staging environment is another name for an environment that closely mimics our final production environment, but isn’t accessible by users or customers. We use this environment to “stage” our application for testing purposes. Why? Well, as much as we’d like our application behave in production exactly as it does on our local machine, unfortunately, that’s rarely the case. 
+A staging environment is another name for an environment that closely mimics our final production environment, but isn’t accessible by users or customers. We use this environment to “stage” our application for testing purposes. Why? Well, as much as we’d like our application to behave in production exactly as it does on our local machine, unfortunately, that’s rarely the case. 
 
 Because our _live_ application is interacting with so many different parts (e.g. our database might live on a service independent of our hosting service), we have to test and account for this. A staging environment, then, allows us to do this without breaking things for real-world users or paying customers.
 
@@ -17,7 +17,7 @@ Modulus is a PaaS (Platform-as-a-Service) company that offers hosting for Node.j
 
 <div class="note">
   <h3>Did Modulus sponsor this post?</h3>
-  <p>Nope! Modulus just happens to be a favorite of mine and is the service used to power all of the Meteor applications powering The Meteor Chef. If anything, this is a fanboy post. No paid shilling here :)</p>
+  <p>Nope! Modulus just happens to be a favorite of mine and is <a href="http://themeteorchef.com/blog/behind-the-scenes-deployment/">the service used to power all of the Meteor applications behind the scenes</a> at The Meteor Chef. If anything, this is a fanboy post. No paid shilling here :)</p>
 </div> 
 
 ### Alternatives to Modulus
@@ -46,16 +46,16 @@ In order to get started with deploying to Modulus we need to set up an account o
 
 ### Setting up an account on Modulus
 
-The easy part! Well...this is actually all pretty easy (a good thing). Pretty much what you'd expect. Hop over to the Modulus site and hit their [signup page](). 
+The easy part! Well...this is actually all pretty easy (a good thing). Pretty much what you'd expect. Hop over to the Modulus site and hit their [signup page](https://my.modulus.io/register). 
 
 ![Signing up on Modulus](http://cl.ly/image/2E071E0V1I2m/Image%202015-08-11%20at%202.21.38%20PM.png)
 
-One of the nice things—and something that's made myself and clients very happy—is that you get a credit for signing up so your servers will run for about one month 100% free. This is really handy if you're on the fence and don't want to pay any money just yet and want to get a hands-on feel for the service.
+One of the nice things—and something that's made myself and clients very happy—is that you get a credit for signing up with Modulus so your servers will run for about one month 100% free. This is really handy if you're on the fence and don't want to pay any money just yet and want to get a hands-on feel for the service.
 
 Once this is in place, we're going to pause on the dashboard for a bit and get the Modulus CLI installed.
 
 ### Installing the Modulus CLI
-The CLI—command line interface—for Modulus is really handy. This is what we can use to quickly and easily deploy our application to the service and perform some administrative and maintenance tasks. To install it, we need to make sure we have [Node.js/NPM](https://nodejs.org/) installed first. Once that is in place, we can hop into our terminal and get on with it:
+The CLI—command line interface—for Modulus is really handy. This is what we can use to quickly and easily deploy our application to the service and perform some administrative and maintenance tasks. To install it, we need to make sure we have [Node.js/NPM](https://nodejs.org/) is installed first (they should be, but just in case you get an error). Once that is in place, we can hop into our terminal and get on with it:
 
 <p class="block-header">Terminal</p>
 
@@ -85,9 +85,9 @@ If your application has a lot of traffic—translating to user interactions resu
 
 Contrast this with a hard drive which is meant as a more permanent storage: staying in the hospital for a few weeks because you "just had to see if I could jump my bike off the roof."
 
-So, what does this translate to? We need to select memory size based on the relative amount of usage our application will have. If our application is only for external use or deployed to a small set of users, we can probably get away with a lower amount of memory like `192MB` or `396MB`. This is also a good size for our staging server which will only ever have a handful of people on it at once (trivial for memory). 
+So, what does this translate to? We need to select memory size based on the relative amount of usage our application will have. If our application is only for internal use or deployed to a small set of users, we can probably get away with a lower amount of memory like `192MB` or `396MB`. This is also a good size for a staging server which will only ever have a handful of people on it at once (trivial for memory). 
 
-In terms of production application that's seeing regular usage, the `512MB` and up options are probably a better fit. Keep in mind, though, don't just max out your memory for the hell of it. Start with whatever you think the lowest possible amount you can use is and then monitor usage. One of your responsibilities as a Sworn Knight of Production is conserving resources as much as possible; yes, even you Silicon Valley cowpokes with your bottomless bank accounts. Every penny counts!
+In terms of a production application that's seeing regular usage, the `512MB` and up options are probably a better fit. Keep in mind, though, don't just max out your memory for the hell of it. Start with whatever you think the lowest possible amount you can use is and then monitor usage. One of your responsibilities as a Sworn Knight of Production is conserving resources as much as possible; yes, even you Silicon Valley cowpokes with your bottomless bank accounts. Every penny counts!
 
 Okay, enough preaching. Last step...what is this dropdown? This is where we can configure the _location_ of our server. Wait...what? This deserves an explanation. When we say "server" in the Wild Wild Cloud West, what we _really_ mean is a _virtual_ server. As cool as it would be for a team of folks to board a golf cart and briskly install a rack mounted server into a cabinet every time we add a new server to our account...that's not quite what's happening here. Instead, we're actually spinning up a "virtual" server which is like running a computer within a computer but only using software. Huh? 
 
@@ -98,7 +98,7 @@ Think about how we start our servers locally. With Meteor, when we call `meteor`
   <figcaption>Diagram of how Modulus handles incoming requests. <a href="https://modulus.desk.com/customer/portal/articles/1957328-how-modulus-works?b_id=9670">Source</a>.</figcaption>
 </figure>
 
-Load balancers! Hooray! A load balancer is basically a routing mechanism that takes user requests from a given domain (e.g. http://app.com) and [redirects each request to an _instance_ of our application](). Can you guess how that works? Ports! For each instance of our server we create, it's assigned to a port number. The load balancer, then, is responsible for routing traffic to a given port (running copy of our application). This quite literally spreads traffic out over a number of servers, effectively _balancing_ the load of requests hitting the application. How neat is that?! 
+Load balancers! Hooray! A load balancer is basically a routing mechanism that takes user requests from a given domain (e.g. http://app.com) and redirects each request to an _instance_ of our application. Can you guess how that works? Ports! For each instance of our server we create, it's assigned to a port number. The load balancer, then, is responsible for routing traffic to a given port (running copy of our application). This quite literally spreads traffic out over a number of servers, effectively _balancing_ the load of requests hitting the application. How neat is that?! 
 
 Okay...that all makes sense but weren't we talking about this dropdown and locations or something? Right. Long story short, this dropdown allows us to setup _where_ our virtual machines are spawned. The Matrix aside, the names here actually have significance. Each of the names in this list represent a **provider** and a **region** where that provider offers servers. When we say _provider_, we mean the company or service that's going to host our application. 
 
@@ -106,7 +106,7 @@ Wait, I thought _Modulus_ is going to host our application? In theory, yes. But,
 
 <div class="note">
   <h3>How Modulus Works</h3>
-  <p>Remember how we mentioned that as an alternative early on and suggested only using those services if you understand the more complicated parts?  Modulus understands those parts and have created a service that removes the thinking for us when deploying to those services. Woof. It's a bit Inception-y, but it means making stuff like hosting a cloud application a lot easier for your average developer (like us). Don't feel silly. <em>I have no freaking clue either</em>, but it works.</p>
+  <p>Remember how we mentioned Amazon EC2 as an alternative earlier in this post and suggested only using those types of services if you understand the more complicated parts?  Modulus understands those parts and have created a service that removes the thinking for us when deploying to those services. Woof. It's a bit Inception-y, but it means making stuff like hosting a cloud application a lot easier for your average developer (like us). Don't feel silly. This is a great thing to have as a developer.</p>
 </div>
 
 Okay! So after we push the magic "Create Project" button, we should have a shiny new Modulus server set up. Let's take a peek at setting up a database on Modulus so we can complete the circle of services needed to deploy our application.
@@ -120,7 +120,7 @@ Setting up a database is pretty easy. First we need to hop over to the "Database
   <figcaption>Create database modal on Modulus.</figcaption>
 </figure>
 
-Same rules apply, albeit a little less complicated here. The label, username, and password behave how you'd expect. Keep the username and password _top secret_. If someone gets this, they get access to your database. For the region, this is an identical concept to creating our server. Pick the region that's closest to you/where your users will primarily be. If you're in New York, NY, for example, any of the "east" options will fit the bill. If you're international and don't see anything close to you, set this to the next closest thing (it should work just as well, too).
+Same rules as spinning up a server apply, albeit a little less complicated here. The label, username, and password behave how you'd expect. Keep the username and password _top secret_. If someone gets this, they get access to your database. For the region, this is an identical concept to creating our server. Pick the region that's closest to you/where your users will primarily be. If you're in New York, NY, for example, any of the "east" options will fit the bill. If you're international and don't see anything close to you, set this to the next closest thing (it should work just as well).
 
 ![Example connection strings on Modulus](http://cl.ly/image/1D1J1a1x1V3N/Image%202015-08-11%20at%2011.58.09%20PM.png)
 
@@ -149,7 +149,7 @@ This particular value, `NODE_ENV` is mostly helpful for accessing in your applic
   </tr>
   <tr>
     <th>ROOT_URL</th>
-    <td>Our app's URL: either our Modulus domain up top or our custom domain like <code>http://bestappever.com</code>.</td>
+    <td>Our app's URL: either our Modulus domain (found at the top of the project page) or our custom domain like <code>http://bestappever.com</code>.</td>
   </tr>
   <tr>
     <th>MONGO_URL</th>
@@ -177,9 +177,9 @@ Ok! Last up is `METEOR_SETTINGS` and this one is optional depending on how you'v
 Once we click "Save" beneath the list of environment variables, we've got our app configured! This should be all we need to do in order to successfully deploy our application. Real quick, we should make a nod to SSL and get an understanding for how it's set up on Modulus.
 
 #### SSL
-In order to keep our applications a little more secure, we can add [SSL]() to our application so that any data moving between the browser and our server is kept private with encryption. When you load up an app and see the URL turn green (or display a lock) and change the protocol from `http` to `https`, this signifies that an application is using SSL and that your connection to that application is secure.
+In order to keep our applications a little more secure, we can add [SSL](https://www.digicert.com/ssl.htm) to our application so that any data moving between the browser and our server is kept private with encryption. When you load up an app and see the URL turn green (or display a lock) and change the protocol from `http` to `https`, this signifies that an application is using SSL and that your connection to that application is secure.
 
-Depending on the type of application we're running, we may need to add support for SSL. Any application that transmits any for of secure data for users (e.g. credit cards)—whether to a third-part service or otherwise—should use SSL. To "use" SSL, we need to acquire an SSL _certificate_ from a provider. We won't cover obtaining this here, but a quick search for SSL providers will turn up a lot of different options. My personal recommendation is [Namecheap](http://namecheap.com) as their basic certificates are relatively inexpensive and the turnaround time for getting a certificate is pretty quick (a few minutes to a few hours).
+Depending on the type of application we're running, we may need to add support for SSL. Any application that transmits any form of secure data for users (e.g. credit cards)—whether to a third-part service or otherwise—should use SSL. To "use" SSL, we need to acquire an SSL _certificate_ from a provider. We won't cover obtaining this here, but a quick search for SSL providers will turn up a lot of different options. My personal recommendation is [Namecheap](http://namecheap.com) as their basic certificates are relatively inexpensive and the turnaround time for getting a certificate is pretty quick (a few minutes to a few hours).
 
 For now, let's focus on setting up an SSL certificate on Modulus. From the "Administration" tab of your project's dashboard, locate the Custom SSL block.
 
@@ -204,7 +204,7 @@ You might also have an "Intermediate CA" (some SSL providers will include this, 
 Areallylongstringofibberishthatisactuallyyoursslcertificate...
 -----END CERTIFICATE-----
 ```
-Combined, these two form an SSL "chain" confirming the identity of your server, allowing connections to be served over SSL. Oof. Back on Modulus, if we have just a Web Server Certificate, we can paste this into our "Certificate" field. If we have _both_ a Web Server Certificate _and_ an Intermediate CA, we want to paste _both_ into the "Certificate" field; the Web Server Certificate first followed by the Intermediate CA. Something like this:
+Combined, these two form an SSL "chain" confirming the identity of your server, allowing connections to be served over SSL. Oof. Back on Modulus, if we just have a Web Server Certificate, we can paste this into our "Certificate" field. If we have _both_ a Web Server Certificate _and_ an Intermediate CA, we want to paste _both_ into the "Certificate" field; the Web Server Certificate first followed by the Intermediate CA. Something like this:
 
 ```text
 -----BEGIN CERTIFICATE-----
@@ -243,7 +243,7 @@ Remember earlier when we mentioned that Modulus technically only hosts Node.js a
 
 After a few seconds, our app will be deployed! If everything worked as expected, we should be able to point our browser to the URL for our application (e.g. `http://demo-femo-50073.onmodulus.net`) and see our application up and running. Hell yeah! 
 
-Congratulations: you just deployed an application into production. Not as scary as you though, huh? Granted, this is just one piece of going into production, but it's a big one. From here, we can focus on improving the performance and security of our application trusting that all of that work has a place to live!
+Congratulations: you just deployed an application into production. Not as scary as you thought, huh? Granted, this is just one piece of going into production, but it's a big one. From here, we can focus on improving the performance and security of our application trusting that all of that work has a place to live!
 
 Before we part ways, we should chat about automating this process a bit.
 
@@ -252,7 +252,7 @@ This is entirely optional but something that's really smart to consider when put
 
 In light of this, it's smart to have a well-tuned workflow that we can rely on when it comes to deploying our application. Even though something like Modulus makes all of this fairly simple, there's still a small margin of error that crops up when we start to do things like host multiple servers on Modulus (e.g. staging vs. production) and [making use of a settings.json file](http://themeteorchef.com/snippets/making-use-of-settings-json). Automating all of this means thinking about all of the steps involved and baking them into a simple, easy-to-remember process that performs all of the steps _for us_.
 
-To do this, we're going to rely on something we actually get from NPM (Node package manager): "scripts." [A tip](http://blog.differential.com/use-package-json-in-your-meteor-app-for-fun-profit/) picked up from [Gerard Sychay](https://twitter.com/hellogerard) over at [Differential](http://differential.io), we can use NPM scripts to automate our workflow a bit by creating short-hand commands that combine a longer string of shell commands. Confused? Let's take a look.
+To do this, we're going to rely on something we actually get from [NPM](https://www.npmjs.com/): "scripts." [A tip](http://blog.differential.com/use-package-json-in-your-meteor-app-for-fun-profit/) picked up from [Gerard Sychay](https://twitter.com/hellogerard) over at [Differential](http://differential.io), we can use NPM scripts to automate our workflow a bit by creating short-hand commands that combine a longer string of shell commands. Confused? Let's take a look.
 
 <p class="block-header">package.json</p>
 
