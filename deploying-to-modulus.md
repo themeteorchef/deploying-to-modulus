@@ -17,7 +17,7 @@ Modulus is a PaaS (Platform-as-a-Service) company that offers hosting for Node.j
 
 <div class="note">
   <h3>Did Modulus sponsor this post?</h3>
-  <p>Nope! Modulus just happens to be a favorite of mine and is <a href="http://themeteorchef.com/blog/behind-the-scenes-deployment/">the service used to power all of the Meteor applications behind the scenes</a> at The Meteor Chef. If anything, this is a fanboy post. No paid shilling here :)</p>
+  <p>Nope! Modulus just happens to be a favorite of mine and is <a href="https://themeteorchef.com/blog/behind-the-scenes-deployment/">the service used to power all of the Meteor applications behind the scenes</a> at The Meteor Chef. If anything, this is a fanboy post. No paid shilling here :)</p>
 </div> 
 
 ### Alternatives to Modulus
@@ -48,7 +48,7 @@ In order to get started with deploying to Modulus we need to set up an account o
 
 The easy part! Well...this is actually all pretty easy (a good thing). Pretty much what you'd expect. Hop over to the Modulus site and hit their [signup page](https://my.modulus.io/register). 
 
-![Signing up on Modulus](http://cl.ly/image/2E071E0V1I2m/Image%202015-08-11%20at%202.21.38%20PM.png)
+![Signing up on Modulus](https://cl.ly/image/2E071E0V1I2m/Image%202015-08-11%20at%202.21.38%20PM.png)
 
 One of the nice things—and something that's made myself and clients very happy—is that you get a credit for signing up with Modulus so your servers will run for about one month 100% free. This is really handy if you're on the fence and don't want to pay any money just yet and want to get a hands-on feel for the service.
 
@@ -64,18 +64,18 @@ npm install -g modulus
 ```
 This will get Modulus installed on our machine and give us access to the CLI via the `modulus` command. Just to make sure we've got everything setup correctly, go ahead and run `modulus login` to login to the account we set up earlier.
 
-![Logging into Modulus](http://cl.ly/image/142H0E3a2q2q/modulus-login.gif)
+![Logging into Modulus](https://cl.ly/image/142H0E3a2q2q/modulus-login.gif)
 
 If all is well we should get the `Signed in as user <username>` message! Now that we've got this squared away, we need to set up a server and a database on Modulus. This is just as easy, but we need to pay attention so we have the right information for setting up our app.
 
 ### Setting up a server and a database
 If we hop back over to the Modulus dashboard, we can create a server and a database pretty quickly. From your dashboard, click on the "Create a New Project" button to spin up a server:
 
-![Modulus dashboard](http://cl.ly/image/3R0o2f283b1y/Image%202015-08-11%20at%203.12.43%20PM.png)
+![Modulus dashboard](https://cl.ly/image/3R0o2f283b1y/Image%202015-08-11%20at%203.12.43%20PM.png)
 
 Okay, this is where we need to pay attention. First, we need to give our server a name. This can be anything you'd like, but make sure to jot it down. This is case sensitive, so make sure to use something easy that you will remember. 
 
-![Creating a new project on Modulus](http://cl.ly/image/0D21331f2L0O/Image%202015-08-11%20at%203.13.39%20PM.png)
+![Creating a new project on Modulus](https://cl.ly/image/0D21331f2L0O/Image%202015-08-11%20at%203.13.39%20PM.png)
 
 Next, we need to pick which type of project we're going to set up. Where's Meteor? Didn't they advertise that on the home page? They did, but—sneaky, sneaky—technically a Meteor application is just a Node.js application. As we'll learn in a bit, to get our app working on Modulus we need to convert it from a Meteor app into a plain Node.js app so that it works. Don't worry, Modulus has automated this for us. For now, let's just select the `NODE.JS` option.
 
@@ -116,13 +116,13 @@ Okay! So after we push the magic "Create Project" button, we should have a shiny
 Setting up a database is pretty easy. First we need to hop over to the "Databases" tab in our dashboard. Once we're there, we need to click the big ol' "Create Database" button in the top right. From there, we'll get a little modal action like this: 
 
 <figure>
-  <img src="http://cl.ly/image/2L0i0X2U3D2q/Image%202015-08-11%20at%2011.56.16%20PM.png" alt="Create Database modal on Modulus">
+  <img src="https://cl.ly/image/2L0i0X2U3D2q/Image%202015-08-11%20at%2011.56.16%20PM.png" alt="Create Database modal on Modulus">
   <figcaption>Create database modal on Modulus.</figcaption>
 </figure>
 
 Same rules as spinning up a server apply, albeit a little less complicated here. The label, username, and password behave how you'd expect. Keep the username and password _top secret_. If someone gets this, they get access to your database. For the region, this is an identical concept to creating our server. Pick the region that's closest to you/where your users will primarily be. If you're in New York, NY, for example, any of the "east" options will fit the bill. If you're international and don't see anything close to you, set this to the next closest thing (it should work just as well).
 
-![Example connection strings on Modulus](http://cl.ly/image/1D1J1a1x1V3N/Image%202015-08-11%20at%2011.58.09%20PM.png)
+![Example connection strings on Modulus](https://cl.ly/image/1D1J1a1x1V3N/Image%202015-08-11%20at%2011.58.09%20PM.png)
 
 Once we're up and running, we should be presented with some information about our database. Under that `Mongo URI` subheading we'll find our _connection string_. This is the MongoDB friendly URL we can use to _connect_ to our database. Let's see how we can make use of this along with some other details when configuring our server.
 
@@ -132,7 +132,7 @@ Okay, so, even though Modulus gets us down to the least possible amount of confi
 #### Environment Variables
 First up, we need to configure a handful of environment variables. Environment variables are like the normal variables you might use in your application, except that they're specific to the _server environment_ our application is in and are what the server uses to get our server ready for prime time when it boots. To set these—again, from our dashboard—we need to click on the project we set up earlier and then click on the "Administration" tab.
 
-![Example of Environment Variables on Modulus](http://cl.ly/image/3M2w0B2C3A0A/Image%202015-08-12%20at%2012.21.45%20AM.png)
+![Example of Environment Variables on Modulus](https://cl.ly/image/3M2w0B2C3A0A/Image%202015-08-12%20at%2012.21.45%20AM.png)
 
 Once we're here, we need to scroll down a ways until we see a table labeled "Environment Variables." Here, we need to add a handful of settings. By default we'll only have one setting, `NODE_ENV` which is assigned a value of `production`. We can leave this as-is, but based on the name and it's value we can guess what this does. Remember when we talked about deploying to an environment earlier? This setting gives our server a way to identify as a specific environment. 
 
@@ -163,7 +163,7 @@ This particular value, `NODE_ENV` is mostly helpful for accessing in your applic
 
 Most of this should make sense. After our `NODE_ENV` setting, we pass a `PORT` number. This is the port number our application will need to run on in order for Modulus to properly route requests to it using its load balancer. We set this here so our application can reference it when it starts up. 
 
-Next, we have our `ROOT_URL`. This is something that's specific to Meteor and used by the platform for generating absolute URLs in our application via the [`Meteor.absoluteUrl()`](http://docs.meteor.com/#/full/meteor_absoluteurl) method. Generally we won't use this in our own application, but a lot of the core packages _do_ make use of it, so we need to make sure it's set; otherwise we'll get an error when we try to boot our app.
+Next, we have our `ROOT_URL`. This is something that's specific to Meteor and used by the platform for generating absolute URLs in our application via the [`Meteor.absoluteUrl()`](https://docs.meteor.com/#/full/meteor_absoluteurl) method. Generally we won't use this in our own application, but a lot of the core packages _do_ make use of it, so we need to make sure it's set; otherwise we'll get an error when we try to boot our app.
 
 This next one, `MONGO_URL` should make sense. Remember that connection string we got earlier after we set up our database? This is where it goes! The only thing to note is that we need to replace the `<user>` and `<pass>` placeholders at the beginning of the string with our actual username and password for the database. 
 
@@ -172,18 +172,18 @@ This next one, `MONGO_URL` should make sense. Remember that connection string we
   <p>A connection string with a username and password in it is like pure gold for anyone that wants to get access to your database. When it comes to handling these values, make sure to store them in a secure place and only let the people who absolutely need access to them to see them. <strong>This is not a joke; if this gets out, you run the risk of exposing all of your users/customers data, so <em>be careful</em>.</strong></p>
 </div>
 
-Ok! Last up is `METEOR_SETTINGS` and this one is optional depending on how you've built your app. If you've [used a settings.json file](http://themeteorchef.com/snippets/making-use-of-settings-json) in your application, this value will need to be set equal to the _contents_ of your `settings.json` file. This can be copy/pasted into the field, or, set via the Modulus CLI (we'll learn how to automate this in a bit).
+Ok! Last up is `METEOR_SETTINGS` and this one is optional depending on how you've built your app. If you've [used a settings.json file](https://themeteorchef.com/snippets/making-use-of-settings-json) in your application, this value will need to be set equal to the _contents_ of your `settings.json` file. This can be copy/pasted into the field, or, set via the Modulus CLI (we'll learn how to automate this in a bit).
  
 Once we click "Save" beneath the list of environment variables, we've got our app configured! This should be all we need to do in order to successfully deploy our application. Real quick, we should make a nod to SSL and get an understanding for how it's set up on Modulus.
 
 #### SSL
 In order to keep our applications a little more secure, we can add [SSL](https://www.digicert.com/ssl.htm) to our application so that any data moving between the browser and our server is kept private with encryption. When you load up an app and see the URL turn green (or display a lock) and change the protocol from `http` to `https`, this signifies that an application is using SSL and that your connection to that application is secure.
 
-Depending on the type of application we're running, we may need to add support for SSL. Any application that transmits any form of secure data for users (e.g. credit cards)—whether to a third-part service or otherwise—should use SSL. To "use" SSL, we need to acquire an SSL _certificate_ from a provider. We won't cover obtaining this here, but a quick search for SSL providers will turn up a lot of different options. My personal recommendation is [Namecheap](http://namecheap.com) as their basic certificates are relatively inexpensive and the turnaround time for getting a certificate is pretty quick (a few minutes to a few hours).
+Depending on the type of application we're running, we may need to add support for SSL. Any application that transmits any form of secure data for users (e.g. credit cards)—whether to a third-part service or otherwise—should use SSL. To "use" SSL, we need to acquire an SSL _certificate_ from a provider. We won't cover obtaining this here, but a quick search for SSL providers will turn up a lot of different options. My personal recommendation is [Namecheap](https://namecheap.com) as their basic certificates are relatively inexpensive and the turnaround time for getting a certificate is pretty quick (a few minutes to a few hours).
 
 For now, let's focus on setting up an SSL certificate on Modulus. From the "Administration" tab of your project's dashboard, locate the Custom SSL block.
 
-![Custom SSL block on Modulus](http://cl.ly/image/3m2A2m2w3K1M/Image%202015-08-12%20at%209.25.26%20AM.png)
+![Custom SSL block on Modulus](https://cl.ly/image/3m2A2m2w3K1M/Image%202015-08-12%20at%209.25.26%20AM.png)
 
 When we click that red plus `+` symbol on the right, we'll be presented with a modal for inputting our "Private Key" and our "Certificate." The "Private Key" field is where you'll place the RSA Private Key you receive when you [generate a CSR](https://github.com/DavidWittman/csrgenerator.com). A CSR is what a certificate provider will require in order to _generate_ your certificate. In that second field, "Certificate" we'll paste in the SSL certificate we receive from our provider. Note: this isn't a "file" like you might expect it to be. Instead, this is just plain text with some specific formatting that the browser can recognize as an SSL certificate. Here's an example of what you might have:
 
@@ -233,13 +233,13 @@ modulus deploy
 ```
 Nice, right? When we do this, we'll be prompted by Modulus to select the server we'd like to deploy to. If we only have one, we'll be given a simple prompt to enter `yes` like this:
 
-![](http://cl.ly/image/090f3V2g2g3u/Image%202015-08-12%20at%209.53.57%20AM.png)
+![](https://cl.ly/image/090f3V2g2g3u/Image%202015-08-12%20at%209.53.57%20AM.png)
 
 Once we enter `yes`, Modulus will get to work. You may notice something interesting. As soon as we do this, Modulus will display a message like `Meteor project detected...` and then display some information about determining a Meteor version and building your Meteor application. What's this? 
 
 Remember earlier when we mentioned that Modulus technically only hosts Node.js apps and not Meteor apps as-is? This is where we make the connection. Here, Modulus is using a tool they've built called [Demeteorizer](https://github.com/onmodulus/demeteorizer) which converts our Meteor app into a vanilla Node.js app. Cool, eh? This functionality is built into the Modulus CLI by default, but we can install Demeteorizer on its own to convert our app for hosting on other PaaS providers, too!
 
-![Example app running on Modulus](http://cl.ly/image/3T1p281I2Q01/Image%202015-08-12%20at%2010.11.30%20AM.png)
+![Example app running on Modulus](https://cl.ly/image/3T1p281I2Q01/Image%202015-08-12%20at%2010.11.30%20AM.png)
 
 After a few seconds, our app will be deployed! If everything worked as expected, we should be able to point our browser to the URL for our application (e.g. `http://demo-femo-50073.onmodulus.net`) and see our application up and running. Hell yeah! 
 
@@ -250,7 +250,7 @@ Before we part ways, we should chat about automating this process a bit.
 #### Automating deployments
 This is entirely optional but something that's really smart to consider when putting an application into production. When it comes to running an application for users and customers, we need to keep in mind that _things will change_. Hopefully that just means that we'll deploy new features or upgrade our app, but sometimes that can mean having to fix bugs and other problems that crop up in the day-to-day of running an application.
 
-In light of this, it's smart to have a well-tuned workflow that we can rely on when it comes to deploying our application. Even though something like Modulus makes all of this fairly simple, there's still a small margin of error that crops up when we start to do things like host multiple servers on Modulus (e.g. staging vs. production) and [making use of a settings.json file](http://themeteorchef.com/snippets/making-use-of-settings-json). Automating all of this means thinking about all of the steps involved and baking them into a simple, easy-to-remember process that performs all of the steps _for us_.
+In light of this, it's smart to have a well-tuned workflow that we can rely on when it comes to deploying our application. Even though something like Modulus makes all of this fairly simple, there's still a small margin of error that crops up when we start to do things like host multiple servers on Modulus (e.g. staging vs. production) and [making use of a settings.json file](https://themeteorchef.com/snippets/making-use-of-settings-json). Automating all of this means thinking about all of the steps involved and baking them into a simple, easy-to-remember process that performs all of the steps _for us_.
 
 To do this, we're going to rely on something we actually get from [NPM](https://www.npmjs.com/): "scripts." [A tip](http://blog.differential.com/use-package-json-in-your-meteor-app-for-fun-profit/) picked up from [Gerard Sychay](https://twitter.com/hellogerard) over at [Differential](http://differential.io), we can use NPM scripts to automate our workflow a bit by creating short-hand commands that combine a longer string of shell commands. Confused? Let's take a look.
 
@@ -289,7 +289,7 @@ npm run production
 ```
 When we call this, each of the commands in the string above will be called in order for us. Let's take a look at how it looks in action.
 
-![NPM scripts running in production](http://cl.ly/image/0j2h0l162u3A/using-npm-scripts.gif)
+![NPM scripts running in production](https://cl.ly/image/0j2h0l162u3A/using-npm-scripts.gif)
 
 So cool! Notice that this behaves just like us typing out each command ourselves. Again, the benefit being that we make sure the _right_ commands get called in the _right_ order each and every time. 
 
