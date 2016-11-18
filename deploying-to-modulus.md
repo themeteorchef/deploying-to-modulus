@@ -1,18 +1,23 @@
 ### What is “deploying?”
+
 When we talk about deploying an application, what we really mean is making that application accessible to others outside of our own computer or our local network. When we “deploy” something, we send it to one of a few `targets`: different environments where our application will run. Depending on the type of application we’re building and what we need to test, we generally deploy to one of the following environments:
 
 #### Development
+
 While not necessarily an environment that we _deploy_ to, our development environment is sort of like the mothership. This is where the bulk of our work occurs. This is your local computer (or your teammate’s computer) where you run your application in isolation and actually _develop_ it. For example, this is where we can throw random bits and bobs of data into the database without worrying.
 
 #### Staging
+
 A staging environment is another name for an environment that closely mimics our final production environment, but isn’t accessible by users or customers. We use this environment to “stage” our application for testing purposes. Why? Well, as much as we’d like our application to behave in production exactly as it does on our local machine, unfortunately, that’s rarely the case. 
 
 Because our _live_ application is interacting with so many different parts (e.g. our database might live on a service independent of our hosting service), we have to test and account for this. A staging environment, then, allows us to do this without breaking things for real-world users or paying customers.
 
 #### Production
+
 Another environment—the one we think of most when we say “deployment”—is the _production_ environment. This is the environment that users and customers have access to. In other words, the production environment is sacred ground. As best as we can, we need to ensure that the code we’re _deploying_ to this environment is stable and working; hence our use of the staging server!
 
 ### What is Modulus?
+
 Modulus is a PaaS (Platform-as-a-Service) company that offers hosting for Node.js, PHP, Java, Static Sites, and most importantly: Meteor applications (technically a Meteor application built as a Node.js application). It’s a favorite of Meteor developers because they offer an easy workflow (similar to Meteor’s `meteor deploy`) that allows for fast deployment of applications. Additionally, they also handle the more difficult aspects of _configuring_ servers, meaning our focus as developers is kept on writing the software, not managing the systems that _host_ our software.
 
 <div class="note">
@@ -21,15 +26,18 @@ Modulus is a PaaS (Platform-as-a-Service) company that offers hosting for Node.j
 </div> 
 
 ### Alternatives to Modulus
+
 Before we dig into getting set up on Modulus, you may be wondering…”are there alternatives to Modulus?” Of course! Here’s a quick look at some of the more popular options for hosting a Meteor application (and how they differ) with Modulus:
 
-#### Digital Ocean
-Digital Ocean is a popular choice for hosting Meteor applications due to its value. The service is fairly inexpensive and offers a “blank slate” server using one of six operating systems: Ubuntu, Fedora, Debian, CentOS, CoreOS, or FreeBSD. The difference between Digital Ocean—“D.O.” (DEE-OH) as you may hear in nerd-to-nerd conversations—and something like Modulus is that installation and configuration of all the software needed to run your application is left up to you. For example, you will need to install Node.js, MongoDB, and all other tools needed to get up and running. 
+#### DigitalOcean
 
-Though inexpensive, D.O. is best reserved for developers who have some experience with system administration, or, aren’t afraid to get their hands dirty.
+DigitalOcean is a popular choice for hosting Meteor applications due to its value. The service is fairly inexpensive and offers a “blank slate” server using one of six operating systems: Ubuntu, Fedora, Debian, CentOS, CoreOS, or FreeBSD. The difference between Digital Ocean—“D.O.” (DEE-OH) as you may hear in nerd-to-nerd conversations—and something like Modulus is that installation and configuration of all the software needed to run your application is left up to you. For example, you will need to install Node.js, MongoDB, and all other tools needed to get up and running. 
+
+Though inexpensive, DO is best reserved for developers who have some experience with system administration, or, aren’t afraid to get their hands dirty.
 
 #### Amazon EC2
-Another option for hosting our Meteor applications is Amazon EC2. This service is similar to Digital Ocean in that it allows you to spin up virtual “instances” (copies) of your application. Again, configuration and management of these instances is up to you so working with EC2 requires a fair bit of system administration knowledge to get up and running.
+
+Another option for hosting our Meteor applications is Amazon EC2. This service is similar to DigitalOcean in that it allows you to spin up virtual “instances” (copies) of your application. Again, configuration and management of these instances is up to you so working with EC2 requires a fair bit of system administration knowledge to get up and running.
 
 <div class="note success">
   <h3>A loophole!</h3>
@@ -37,12 +45,15 @@ Another option for hosting our Meteor applications is Amazon EC2. This service i
 </div>
 
 #### Heroku
+
 Possibly the closest option to Modulus at the moment, Heroku, allows you to easily deploy your application and add support for different things like databases, sending email, and error logging through something they call "add-ons." To make the initial configuration of Heroku a bit easier, you can make use of the [Heroku Buildpack for Meteor](https://github.com/jordansissel/heroku-buildpack-meteor) by Jordan Sissel. 
 
 #### Galaxy
-Built by Meteor Development Group engineers specifically for hosting Meteor apps, Galaxy allows you to deploy directly through the Meteor CLI with the command, `meteor deploy`. After deploying, you can scale your app both vertically and horizonally through the Galaxy user interface. It also makes hosting easier by offering features such as free SSL certs, free prerendering for SEO, consolidated logging, and per-container activity metrics. This solution is ideal for developers that don't want to spend time with system adminstration or configuration of their hosting server. They don't host MongoDB, so you'd have to host your database somewhere else (such as Compose.io or mLab).  
+
+Built by Meteor Development Group engineers specifically for hosting Meteor apps, Galaxy allows you to deploy directly through the Meteor CLI with the command, `meteor deploy`. After deploying, you can scale your app both vertically and horizonally through the Galaxy user interface. It also makes hosting easier by offering features such as free SSL certs, free prerendering for SEO, consolidated logging, and per-container activity metrics. This solution is ideal for developers that don't want to spend time with system adminstration or configuration of their hosting server. They don't host MongoDB, so you'd have to host your database somewhere else (such as [Compose.io](https://compose.io) or [mLab](https://mlab.com)).  
 
 #### What's the best?
+
 Oh, silly you, can you guess the answer? It's up to you! All of these services essentially get us the same end using different means. My advice: experiment. Put aside a few days (or even weeks) to evaluate the different options and figure out what is most comfortable for you and/or your team.
 
 In order to get started with deploying to Modulus we need to set up an account on their site. Let’s hop over their now and get set up!
@@ -58,6 +69,7 @@ One of the nice things—and something that's made myself and clients very happy
 Once this is in place, we're going to pause on the dashboard for a bit and get the Modulus CLI installed.
 
 ### Installing the Modulus CLI
+
 The CLI—command line interface—for Modulus is really handy. This is what we can use to quickly and easily deploy our application to the service and perform some administrative and maintenance tasks. To install it, we need to make sure we have [Node.js/NPM](https://nodejs.org/) is installed first (they should be, but just in case you get an error). Once that is in place, we can hop into our terminal and get on with it:
 
 <p class="block-header">Terminal</p>
@@ -72,6 +84,7 @@ This will get Modulus installed on our machine and give us access to the CLI via
 If all is well we should get the `Signed in as user <username>` message! Now that we've got this squared away, we need to set up a server and a database on Modulus. This is just as easy, but we need to pay attention so we have the right information for setting up our app.
 
 ### Setting up a server and a database
+
 If we hop back over to the Modulus dashboard, we can create a server and a database pretty quickly. From your dashboard, click on the "Create a New Project" button to spin up a server:
 
 ![Modulus dashboard](https://cl.ly/image/3R0o2f283b1y/Image%202015-08-11%20at%203.12.43%20PM.png)
@@ -130,9 +143,11 @@ Same rules as spinning up a server apply, albeit a little less complicated here.
 Once we're up and running, we should be presented with some information about our database. Under that `Mongo URI` subheading we'll find our _connection string_. This is the MongoDB friendly URL we can use to _connect_ to our database. Let's see how we can make use of this along with some other details when configuring our server.
 
 ### Configuring a server
+
 Okay, so, even though Modulus gets us down to the least possible amount of configuration necessary for spinning up a cloud-based server for our Meteor app (it's really quite impressive), we _do_ have to do a little bit of config. Don't hate. It's just as easy as everything else we've seen. A few form fields, a double check, and off to Mars we go.
 
-#### Environment Variables
+#### Environment variables
+
 First up, we need to configure a handful of environment variables. Environment variables are like the normal variables you might use in your application, except that they're specific to the _server environment_ our application is in and are what the server uses to get our server ready for prime time when it boots. To set these—again, from our dashboard—we need to click on the project we set up earlier and then click on the "Administration" tab.
 
 ![Example of Environment Variables on Modulus](https://cl.ly/image/3M2w0B2C3A0A/Image%202015-08-12%20at%2012.21.45%20AM.png)
@@ -180,6 +195,7 @@ Ok! Last up is `METEOR_SETTINGS` and this one is optional depending on how you'v
 Once we click "Save" beneath the list of environment variables, we've got our app configured! This should be all we need to do in order to successfully deploy our application. Real quick, we should make a nod to SSL and get an understanding for how it's set up on Modulus.
 
 #### SSL
+
 In order to keep our applications a little more secure, we can add [SSL](https://www.digicert.com/ssl.htm) to our application so that any data moving between the browser and our server is kept private with encryption. When you load up an app and see the URL turn green (or display a lock) and change the protocol from `http` to `https`, this signifies that an application is using SSL and that your connection to that application is secure.
 
 Depending on the type of application we're running, we may need to add support for SSL. Any application that transmits any form of secure data for users (e.g. credit cards)—whether to a third-part service or otherwise—should use SSL. To "use" SSL, we need to acquire an SSL _certificate_ from a provider. We won't cover obtaining this here, but a quick search for SSL providers will turn up a lot of different options. My personal recommendation is [Namecheap](https://namecheap.com) as their basic certificates are relatively inexpensive and the turnaround time for getting a certificate is pretty quick (a few minutes to a few hours).
@@ -227,6 +243,7 @@ Once we have this in place, we should be all set on Modulus for SSL.
 </div>
 
 ### Deploying to Modulus
+
 Okay! Finally! We've got our app configured, so now it's time to deploy. Back in our application directory in the terminal, all we have to run is:
 
 <p class="block-header">Terminal</p>
@@ -251,6 +268,7 @@ Congratulations: you just deployed an application into production. Not as scary 
 Before we part ways, we should chat about automating this process a bit.
 
 #### Automating deployments
+
 This is entirely optional but something that's really smart to consider when putting an application into production. When it comes to running an application for users and customers, we need to keep in mind that _things will change_. Hopefully that just means that we'll deploy new features or upgrade our app, but sometimes that can mean having to fix bugs and other problems that crop up in the day-to-day of running an application.
 
 In light of this, it's smart to have a well-tuned workflow that we can rely on when it comes to deploying our application. Even though something like Modulus makes all of this fairly simple, there's still a small margin of error that crops up when we start to do things like host multiple servers on Modulus (e.g. staging vs. production) and [making use of a settings.json file](https://themeteorchef.com/snippets/making-use-of-settings-json). Automating all of this means thinking about all of the steps involved and baking them into a simple, easy-to-remember process that performs all of the steps _for us_.
@@ -297,4 +315,5 @@ When we call this, each of the commands in the string above will be called in or
 So cool! Notice that this behaves just like us typing out each command ourselves. Again, the benefit being that we make sure the _right_ commands get called in the _right_ order each and every time. 
 
 ### Wrap Up & Summary
+
 In this recipe we learned about taking a Meteor app into production using the Modulus PaaS. We learned about setting up a server on Modulus, setting up a database, and configuring our server to get our deployment up and running. We also learned how to deploy our project from the command line and automate the process of deployment using NPM scripts!
