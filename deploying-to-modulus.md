@@ -39,6 +39,9 @@ Another option for hosting our Meteor applications is Amazon EC2. This service i
 #### Heroku
 Possibly the closest option to Modulus at the moment, Heroku, allows you to easily deploy your application and add support for different things like databases, sending email, and error logging through something they call "add-ons." To make the initial configuration of Heroku a bit easier, you can make use of the [Heroku Buildpack for Meteor](https://github.com/jordansissel/heroku-buildpack-meteor) by Jordan Sissel. 
 
+#### Galaxy
+Built by Meteor Development Group engineers specifically for hosting Meteor apps, Galaxy allows you to deploy directly through the Meteor CLI with the command, `meteor deploy`. After deploying, you can scale your app both vertically and horizonally through the Galaxy user interface. It also makes hosting easier by offering features such as free SSL certs, free prerendering for SEO, consolidated logging, per-container activity metrics. This solution is ideal for developers that don't want to spend time with system adminstration or configuration of their hosting server. They don't host MongoDB, so you'd have to host your database somewhere else (such as Compose.io or mLab).  
+
 #### What's the best?
 Oh, silly you, can you guess the answer? It's up to you! All of these services essentially get us the same end using different means. My advice: experiment. Put aside a few days (or even weeks) to evaluate the different options and figure out what is most comfortable for you and/or your team.
 
